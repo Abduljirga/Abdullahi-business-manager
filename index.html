@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullahi Ibrahim Business Manager</title>
+<style>
+:root{--navy:#102b55;--blue:#1769d2;--pale:#eef5ff;--ink:#17243a;--muted:#6b7890;--line:#e2e9f2;--bg:#f5f7fb;--green:#138a59;--red:#c74343}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:10px 14px;font-weight:650}
+.app{display:flex;min-height:100vh}.sidebar{width:250px;background:var(--navy);color:white;padding:24px 16px;flex-shrink:0}
+.brand{font-size:17px;font-weight:800;line-height:1.3;padding:4px 10px 25px}.brand small{display:block;font-size:11px;font-weight:500;color:#b9cbe5;margin-top:5px}
+.nav{display:grid;gap:6px}.nav button{background:transparent;color:#d7e4f6;text-align:left;padding:12px;border-radius:9px}.nav button.active,.nav button:hover{background:#214879;color:white}
+.sidefoot{margin:28px 10px 0;color:#b9cbe5;font-size:12px}
+.main{flex:1;min-width:0}.topbar{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:12px}
+.topbar h1{font-size:20px;margin:0}.top-actions{display:flex;gap:9px;align-items:center}.content{padding:26px;max-width:1400px;margin:auto}
+.btn{background:var(--blue);color:white}.btn.secondary{background:var(--pale);color:var(--blue)}.btn.danger{background:#fff0f0;color:var(--red)}.btn.dark{background:var(--navy);color:white}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}.card,.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 3px 12px #1a37600a}
+.card .label{font-size:13px;color:var(--muted)}.card .value{font-size:25px;font-weight:800;margin-top:8px}.card .hint{font-size:12px;color:var(--muted);margin-top:4px}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.panel h2{font-size:16px;margin:0 0 15px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.section-head h2{margin:0;font-size:19px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}.toolbar input,.toolbar select{max-width:240px}
+input,select,textarea{width:100%;padding:10px 11px;border:1px solid #d8e1ed;border-radius:8px;background:white;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1769d21a}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:650;background:#fafbfd}td .sub{font-size:11px;color:var(--muted)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.badge{padding:4px 8px;border-radius:30px;font-size:11px;background:#eaf7f0;color:var(--green)}.badge.red{background:#fff0f0;color:var(--red)}
+.modal{position:fixed;inset:0;background:#08172c88;display:none;align-items:center;justify-content:center;padding:16px;z-index:5}.modal.show{display:flex}.dialog{background:white;border-radius:16px;padding:22px;width:min(650px,100%);max-height:92vh;overflow:auto}.dialog h2{margin:0 0 18px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.hidden{display:none!important}.muted{color:var(--muted)}.money-in{color:var(--green);font-weight:700}.money-out{color:var(--red);font-weight:700}
+.invoice-head{display:flex;justify-content:space-between;gap:15px;border-bottom:2px solid var(--navy);padding-bottom:18px;margin-bottom:18px}.invoice-head h2{margin:0;color:var(--navy)}.invoice-total{text-align:right;font-size:20px;font-weight:800}
+.notice{background:#fff8e7;border:1px solid #f1dfad;color:#705719;border-radius:10px;padding:12px 14px;font-size:12px;margin-bottom:18px}
+@media(max-width:900px){.sidebar{width:205px}.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:620px){.app{display:block}.sidebar{width:100%;padding:12px}.brand{padding:5px 8px 12px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:9px}.sidefoot{display:none}.topbar{height:auto;padding:14px;align-items:flex-start}.topbar h1{font-size:16px}.content{padding:14px}.cards{gap:9px}.card{padding:13px}.card .value{font-size:19px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+@media print{body{background:white}.sidebar,.topbar,.no-print,.notice{display:none!important}.main,.content{padding:0;margin:0}.app{display:block}.invoice-print{display:block!important}.invoice-print .panel{border:0;box-shadow:none}.invoice-print table{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand">ABDULLAHI IBRAHIM<small>BUSINESS MANAGER</small></div>
+ <nav class="nav">
+  <button class="active" data-page="dashboard" data-en="▦ Dashboard" data-ha="▦ Babban Shafi">▦ Dashboard</button>
+  <button data-page="invoices" data-en="▤ Invoices" data-ha="▤ Rasitoci">▤ Invoices</button>
+  <button data-page="cashflow" data-en="↔ Cash Flow" data-ha="↔ Shigarwa da Fitar Kuɗi">↔ Cash Flow</button>
+  <button data-page="expenses" data-en="− Expenses" data-ha="− Kuɗaɗen Kashewa">− Expenses</button>
+  <button data-page="customers" data-en="♙ Customers" data-ha="♙ Kwastomomi">♙ Customers</button>
+  <button data-page="inventory" data-en="▦ Inventory" data-ha="▦ Kaya / Stock">▦ Inventory</button>
+  <button data-page="suppliers" data-en="♧ Suppliers" data-ha="♧ Masu kaya">♧ Suppliers</button>
+  <button data-page="accounts" data-en="▣ Bank accounts" data-ha="▣ Asusun banki">▣ Bank accounts</button>
+  <button data-page="reports" data-en="▥ Reports" data-ha="▥ Rahotanni">▥ Reports</button>
+  <button data-page="branches" data-en="⌂ Branches" data-ha="⌂ Rassa">⌂ Branches</button>
+  <button data-page="staff" data-en="♙ Staff & roles" data-ha="♙ Ma'aikata">♙ Staff & roles</button>
+  <button data-page="settings" data-en="⚙ Settings" data-ha="⚙ Saituna">⚙ Settings</button>
+ </nav>
+ <div class="sidefoot">Simple tools for every kind of business.</div>
+</aside>
+<main class="main">
+ <header class="topbar"><h1 id="pageTitle">Dashboard</h1><div class="top-actions"><span class="badge" id="activeBranchLabel">Head Office</span><select id="language" style="width:auto"><option value="en">English</option><option value="ha">Hausa</option></select><button class="btn secondary" onclick="exportData()">Backup data</button></div></header>
+ <div class="content">
+ <div class="notice" id="storageNotice">Your records are saved in this browser on this device. Export a backup regularly. Clearing browser data may erase records.</div>
+ <section id="dashboard" class="page">
+  <div class="cards">
+   <div class="card"><div class="label" data-en="Total income" data-ha="Jimillar kuɗin shiga">Total income</div><div class="value" id="dIncome">₦0.00</div><div class="hint" data-en="Recorded cash received" data-ha="Kuɗin da aka rubuta an karɓa">Recorded cash received</div></div>
+   <div class="card"><div class="label" data-en="Total expenses" data-ha="Jimillar kashe kuɗi">Total expenses</div><div class="value" id="dExpense">₦0.00</div><div class="hint" data-en="Recorded business spending" data-ha="Kuɗin da aka rubuta an kashe">Recorded business spending</div></div>
+   <div class="card"><div class="label" data-en="Net cash flow" data-ha="Ragowar kuɗi">Net cash flow</div><div class="value" id="dNet">₦0.00</div><div class="hint" data-en="Income minus expenses" data-ha="Shiga cire kashewa">Income minus expenses</div></div>
+   <div class="card"><div class="label" data-en="Unpaid invoices" data-ha="Rasitocin da ba a biya ba">Unpaid invoices</div><div class="value" id="dUnpaid">₦0.00</div><div class="hint" data-en="Outstanding customer balance" data-ha="Kuɗin da ake bin kwastomomi">Outstanding customer balance</div></div>
+  </div>
+  <div class="grid2">
+   <div class="panel"><h2 data-en="Recent transactions" data-ha="Mu'amaloli na baya-bayan nan">Recent transactions</h2><div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Type</th><th>Amount</th></tr></thead><tbody id="recentRows"></tbody></table></div></div>
+   <div class="panel"><h2 data-en="Quick actions" data-ha="Ayyuka cikin sauri">Quick actions</h2><div style="display:grid;gap:10px"><button class="btn" onclick="openInvoice()">＋ Create invoice</button><button class="btn secondary" onclick="openCash()">＋ Record income</button><button class="btn secondary" onclick="openExpense()">＋ Add expense</button><button class="btn secondary" onclick="go('reports')">View reports →</button></div></div>
+  </div>
+ </section>
+ <section id="invoices" class="page hidden">
+  <div class="section-head"><h2 data-en="Invoices" data-ha="Rasitoci">Invoices</h2><button class="btn" onclick="openInvoice()">＋ New invoice</button></div>
+  <div class="toolbar"><input id="invoiceSearch" placeholder="Search invoice or customer" oninput="renderInvoices()"></div>
+  <div class="table-wrap"><table><thead><tr><th>Invoice #</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody id="invoiceRows"></tbody></table></div>
+ </section>
+ <section id="cashflow" class="page hidden">
+  <div class="section-head"><h2 data-en="Cash flow" data-ha="Shigarwa da fitar kuɗi">Cash flow</h2><button class="btn" onclick="openCash()">＋ Record transaction</button></div>
+  <div class="cards"><div class="card"><div class="label">Money in</div><div class="value" id="cIn">₦0.00</div></div><div class="card"><div class="label">Money out</div><div class="value" id="cOut">₦0.00</div></div><div class="card"><div class="label">Net movement</div><div class="value" id="cNet">₦0.00</div></div><div class="card"><div class="label">Transactions</div><div class="value" id="cCount">0</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Account</th><th>Type</th><th>Amount</th><th></th></tr></thead><tbody id="cashRows"></tbody></table></div>
+ </section>
+ <section id="expenses" class="page hidden">
+  <div class="section-head"><h2 data-en="Expenses" data-ha="Kuɗaɗen kashewa">Expenses</h2><button class="btn" onclick="openExpense()">＋ Add expense</button></div>
+  <div class="cards"><div class="card"><div class="label">Total expenses</div><div class="value" id="eTotal">₦0.00</div></div><div class="card"><div class="label">Expense records</div><div class="value" id="eCount">0</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Date</th><th>Expense</th><th>Category</th><th>Payment method</th><th>Amount</th><th></th></tr></thead><tbody id="expenseRows"></tbody></table></div>
+ </section>
+ <section id="customers" class="page hidden">
+  <div class="section-head"><h2 data-en="Customers" data-ha="Kwastomomi">Customers</h2><button class="btn" onclick="openCustomer()">＋ Add customer</button></div>
+  <div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Address</th><th></th></tr></thead><tbody id="customerRows"></tbody></table></div>
+ </section>
+
+ <section id="inventory" class="page hidden">
+  <div class="section-head"><h2>Inventory / Stock</h2><button class="btn" onclick="openStock()">＋ Add stock item</button></div>
+  <div class="cards"><div class="card"><div class="label">Different items</div><div class="value" id="stockCount">0</div></div><div class="card"><div class="label">Total units in stock</div><div class="value" id="stockUnits">0</div></div><div class="card"><div class="label">Low stock items</div><div class="value" id="stockLow">0</div></div><div class="card"><div class="label">Stock value (cost)</div><div class="value" id="stockValue">₦0.00</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Item</th><th>SKU</th><th>Qty</th><th>Low-stock level</th><th>Cost price</th><th>Selling price</th><th>Actions</th></tr></thead><tbody id="stockRows"></tbody></table></div>
+ </section>
+ <section id="suppliers" class="page hidden">
+  <div class="section-head"><h2>Suppliers / Masu kaya</h2><button class="btn" onclick="openSupplier()">＋ Add supplier</button></div>
+  <div class="table-wrap"><table><thead><tr><th>Supplier</th><th>Phone</th><th>Email</th><th>Address</th><th>Notes</th><th></th></tr></thead><tbody id="supplierRows"></tbody></table></div>
+ </section>
+ <section id="accounts" class="page hidden">
+  <div class="section-head"><h2>Bank & cash accounts</h2><button class="btn" onclick="openAccount()">＋ Add account</button></div>
+  <div class="notice">Account balances are calculated from transactions you record and the opening balance you enter. They are not connected directly to your bank.</div>
+  <div id="accountCards" class="cards"></div>
+  <div class="table-wrap"><table><thead><tr><th>Account</th><th>Type</th><th>Opening balance</th><th>Current balance</th><th></th></tr></thead><tbody id="accountRows"></tbody></table></div>
+ </section>
+ <section id="reports" class="page hidden">
+  <div class="section-head"><h2 data-en="Business reports" data-ha="Rahotannin kasuwanci">Business reports</h2><button class="btn secondary" onclick="downloadReport()">Download CSV</button></div>
+  <div class="cards"><div class="card"><div class="label">Sales / income</div><div class="value" id="rIncome">₦0.00</div></div><div class="card"><div class="label">Expenses</div><div class="value" id="rExpense">₦0.00</div></div><div class="card"><div class="label">Net result</div><div class="value" id="rNet">₦0.00</div></div><div class="card"><div class="label">Invoice count</div><div class="value" id="rInvoices">0</div></div></div>
+  <div class="panel"><h2>Summary</h2><p id="reportSummary" class="muted"></p><p class="muted">Note: This is a simple cash-based summary of records entered in this app, not a tax or audited financial statement.</p></div>
+ </section>
+ <section id="branches" class="page hidden">
+  <div class="section-head"><h2>Branch management / Gudanar da rassa</h2><button class="btn" onclick="openBranch()">＋ Add branch</button></div>
+  <div class="notice">Branch register is active in this browser. Financial records are not yet separated by branch; online database and secure access must be connected before staff use this for live operations.</div>
+  <div class="cards"><div class="card"><div class="label">Registered branches</div><div class="value" id="branchCount">1</div></div><div class="card"><div class="label">Active branch</div><div class="value" id="branchActive" style="font-size:18px">Head Office</div></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Branch</th><th>Address</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead><tbody id="branchRows"></tbody></table></div>
+ </section>
+ <section id="staff" class="page hidden">
+  <div class="section-head"><h2>Staff & access roles / Ma'aikata da izini</h2><button class="btn" onclick="openStaff()">＋ Add staff</button></div>
+  <div class="notice">This is a staff directory and role-planning screen only. It does not yet create secure user accounts or passwords. Do not share this local version as a live multi-user system.</div>
+  <div class="table-wrap"><table><thead><tr><th>Staff name</th><th>Username</th><th>Role</th><th>Assigned branch</th><th>Actions</th></tr></thead><tbody id="staffRows"></tbody></table></div>
+  <div class="panel" style="margin-top:15px"><h2>Role permissions / Iyakokin izini</h2><p><b>Super Admin:</b> Full control over all branches and settings.</p><p><b>Branch Manager:</b> Manage one assigned branch.</p><p><b>Cashier:</b> Create invoices and record payments.</p><p><b>Storekeeper:</b> Manage stock and suppliers.</p></div>
+ </section>
+ <section id="settings" class="page hidden">
+  <div class="section-head"><h2 data-en="Business settings" data-ha="Saitunan kasuwanci">Business settings</h2><button class="btn" onclick="saveSettings()">Save settings</button></div>
+  <div class="panel"><div class="form-grid">
+   <div class="field"><label>Business name / Sunan kasuwanci</label><input id="sName" value="ABDULLAHI IBRAHIM BUSINESS MANAGER"></div>
+   <div class="field"><label>Phone / Lambar waya</label><input id="sPhone" placeholder="Business phone"></div>
+   <div class="field"><label>Email</label><input id="sEmail" type="email" placeholder="Business email"></div>
+   <div class="field"><label>Address / Adireshi</label><input id="sAddress" placeholder="Business address"></div>
+   <div class="field"><label>Currency</label><select id="sCurrency"><option value="NGN">Nigerian Naira (₦)</option><option value="USD">US Dollar ($)</option><option value="GBP">British Pound (£)</option></select></div>
+  </div></div>
+  <div class="panel" style="margin-top:15px"><h2>Data management</h2><p class="muted">Download a backup before moving to another device. Data is stored locally in this browser; this starter version does not sync between devices or users.</p><div class="toolbar"><button class="btn secondary" onclick="exportData()">Download backup (JSON)</button><label class="btn secondary" style="display:inline-flex;align-items:center">Import backup<input type="file" accept=".json,application/json" onchange="importData(event)" style="display:none"></label><button class="btn danger" onclick="clearData()">Delete all records</button></div></div>
+ </section>
+ </div>
+</main>
+</div>
+<div class="modal" id="modal"><div class="dialog"><div id="modalContent"></div></div></div>
+<script>
+const KEY='aibm_v1';
+let db=JSON.parse(localStorage.getItem(KEY)||'{"invoices":[],"cash":[],"expenses":[],"customers":[],"inventory":[],"suppliers":[],"accounts":[],"branches":[{"id":1,"name":"Head Office","address":"","phone":""}],"staff":[],"settings":{"name":"ABDULLAHI IBRAHIM BUSINESS MANAGER","currency":"NGN"}}');
+let lang='en';
+db.inventory=db.inventory||[]; db.suppliers=db.suppliers||[]; db.accounts=db.accounts||[]; db.branches=db.branches||[{id:1,name:'Head Office',address:'',phone:''}]; db.staff=db.staff||[]; if(!db.branches.length)db.branches=[{id:1,name:'Head Office',address:'',phone:''}];
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('en-NG',{style:'currency',currency:db.settings.currency||'NGN'}).format(Number(n)||0);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
+const today=()=>new Date().toISOString().slice(0,10);
+function go(page){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));$(page).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('pageTitle').textContent=({dashboard:'Dashboard',invoices:'Invoices',cashflow:'Cash Flow',expenses:'Expenses',customers:'Customers',branches:'Branches',staff:'Staff & Roles',reports:'Reports',settings:'Settings'})[page];renderAll()}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
+$('language').onchange=e=>{lang=e.target.value;document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);document.querySelectorAll('.nav button').forEach(b=>b.textContent=b.dataset[lang]);};
+function modal(title,body,submit){$('modalContent').innerHTML=`<h2>${title}</h2>${body}<div class="dialog-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn" id="modalSave">Save</button></div>`;$('modal').classList.add('show');$('modalSave').onclick=submit}
+function closeModal(){$('modal').classList.remove('show')}
+function field(label,id,type='text',value='',extra=''){return `<div class="field"><label>${label}</label><input id="${id}" type="${type}" value="${esc(value)}" ${extra}></div>`}
+function openInvoice(){
+ let body=`<div class="form-grid">${field('Customer name','iCustomer')}${field('Customer phone','iPhone')}${field('Invoice date','iDate','date',today())}${field('Due date','iDue','date')}${field('Item / Description','iItem')}${field('Quantity','iQty','number','1','min="0.01" step="0.01"')}${field('Unit price','iPrice','number','0','min="0" step="0.01"')}${field('Amount paid','iPaid','number','0','min="0" step="0.01"')}</div><p class="muted">Total is calculated from quantity × unit price. Add further line items in a later version.</p>`;
+ modal('Create invoice / Ƙirƙiri rasit',body,()=>{let qty=+$('iQty').value,price=+$('iPrice').value,total=qty*price;if(!$('iCustomer').value.trim()||!$('iItem').value.trim()||qty<=0||price<0){alert('Please enter customer, item, quantity and price.');return}let inv={id:Date.now(),number:'INV-'+String(db.invoices.length+1).padStart(4,'0'),customer:$('iCustomer').value,phone:$('iPhone').value,date:$('iDate').value,due:$('iDue').value,item:$('iItem').value,qty,price,total,paid:Math.min(+$('iPaid').value,total)};db.invoices.unshift(inv);if(inv.paid>0)db.cash.unshift({id:Date.now()+1,date:inv.date,description:'Payment for '+inv.number,category:'Invoice payment',account:'Cash',type:'in',amount:inv.paid});save();closeModal();renderAll();printInvoice(inv.id)});
+}
+function printInvoice(id){let x=db.invoices.find(v=>v.id===id);if(!x)return;let w=window.open('','_blank');if(!w){alert('Please allow pop-ups to print invoice.');return}let s=db.settings;w.document.write(`<html><head><title>${x.number}</title><style>body{font:14px Arial;padding:40px;color:#17243a}.head{display:flex;justify-content:space-between;border-bottom:2px solid #102b55;padding-bottom:20px}.muted{color:#667}table{width:100%;border-collapse:collapse;margin-top:35px}td,th{padding:12px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;margin-top:25px;font-size:20px;font-weight:bold}.foot{margin-top:60px;color:#667}</style></head><body><div class="head"><div><h1>${esc(s.name||'Business')}</h1><p>${esc(s.address||'')}<br>${esc(s.phone||'')} ${esc(s.email||'')}</p></div><div><h2>INVOICE</h2><b>${esc(x.number)}</b><p>Date: ${esc(x.date)}<br>Due: ${esc(x.due||'—')}</p></div></div><h3>Bill To: ${esc(x.customer)}</h3><p>${esc(x.phone)}</p><table><tr><th>Description</th><th>Qty</th><th>Unit price</th><th>Amount</th></tr><tr><td>${esc(x.item)}</td><td>${x.qty}</td><td>${money(x.price)}</td><td>${money(x.total)}</td></tr></table><div class="total">Total: ${money(x.total)}<br><small>Paid: ${money(x.paid)} | Balance: ${money(x.total-x.paid)}</small></div><p class="foot">Thank you for your business.</p><script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close()}
+function openCash(){let body=`<div class="form-grid">${field('Date','cDate','date',today())}${field('Description','cDesc')}${field('Amount','cAmount','number','0','min="0.01" step="0.01"')}<div class="field"><label>Type</label><select id="cType"><option value="in">Money in / Kuɗin shiga</option><option value="out">Money out / Kuɗin fita</option></select></div><div class="field"><label>Category</label><select id="cCat"><option>Sales</option><option>Service income</option><option>Invoice payment</option><option>Capital</option><option>Other</option></select></div><div class="field"><label>Account</label><select id="cAccount"><option>Cash</option><option>Bank</option><option>Mobile money</option>${db.accounts.map(a=>`<option>${esc(a.name)}</option>`).join('')}</select></div></div>`;
+ modal('Record cash flow',body,()=>{let amount=+$('cAmount').value;if(!$('cDesc').value.trim()||amount<=0){alert('Enter description and a valid amount.');return}db.cash.unshift({id:Date.now(),date:$('cDate').value,description:$('cDesc').value,amount,type:$('cType').value,category:$('cCat').value,account:$('cAccount').value});save();closeModal();renderAll()})}
+function openExpense(){let body=`<div class="form-grid">${field('Date','eDate','date',today())}${field('Expense description','eDesc')} ${field('Amount','eAmount','number','0','min="0.01" step="0.01"')}<div class="field"><label>Category</label><select id="eCat"><option>Transport</option><option>Salary</option><option>Feeding</option><option>Rent</option><option>Utilities</option><option>Stock / Purchases</option><option>Office expenses</option><option>Other</option></select></div><div class="field"><label>Payment method</label><select id="eMethod"><option>Cash</option><option>Bank</option><option>Mobile money</option></select></div></div>`;
+ modal('Add expense / Ƙara kashe kuɗi',body,()=>{let amount=+$('eAmount').value;if(!$('eDesc').value.trim()||amount<=0){alert('Enter description and a valid amount.');return}let x={id:Date.now(),date:$('eDate').value,description:$('eDesc').value,amount,category:$('eCat').value,method:$('eMethod').value};db.expenses.unshift(x);db.cash.unshift({id:x.id+1,date:x.date,description:x.description,amount,type:'out',category:x.category,account:x.method});save();closeModal();renderAll()})}
+function openCustomer(){let body=`<div class="form-grid">${field('Customer name','uName')}${field('Phone','uPhone','tel')}${field('Email','uEmail','email')}${field('Address','uAddress')}</div>`;modal('Add customer',body,()=>{if(!$('uName').value.trim()){alert('Enter customer name.');return}db.customers.push({id:Date.now(),name:$('uName').value,phone:$('uPhone').value,email:$('uEmail').value,address:$('uAddress').value});save();closeModal();renderAll()})}
+function del(arr,id){if(confirm('Delete this record?')){db[arr]=db[arr].filter(x=>x.id!==id);save();renderAll()}}
+function renderAll(){let ins=db.cash.filter(x=>x.type==='in').reduce((a,x)=>a+x.amount,0),outs=db.cash.filter(x=>x.type==='out').reduce((a,x)=>a+x.amount,0),unpaid=db.invoices.reduce((a,x)=>a+x.total-x.paid,0);$('dIncome').textContent=money(ins);$('dExpense').textContent=money(outs);$('dNet').textContent=money(ins-outs);$('dUnpaid').textContent=money(unpaid);$('cIn').textContent=money(ins);$('cOut').textContent=money(outs);$('cNet').textContent=money(ins-outs);$('cCount').textContent=db.cash.length;$('eTotal').textContent=money(db.expenses.reduce((a,x)=>a+x.amount,0));$('eCount').textContent=db.expenses.length;$('rIncome').textContent=money(ins);$('rExpense').textContent=money(outs);$('rNet').textContent=money(ins-outs);$('rInvoices').textContent=db.invoices.length;$('reportSummary').textContent=`Recorded income: ${money(ins)}. Recorded expenses: ${money(outs)}. Net cash movement: ${money(ins-outs)}. Outstanding invoices: ${money(unpaid)}.`;
+ $('recentRows').innerHTML=db.cash.slice(0,6).map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.description)}</td><td>${x.type==='in'?'Income':'Expense'}</td><td class="${x.type==='in'?'money-in':'money-out'}">${x.type==='in'?'+':'−'}${money(x.amount)}</td></tr>`).join('')||empty(4);
+ $('cashRows').innerHTML=db.cash.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.description)}</td><td>${esc(x.category)}</td><td>${esc(x.account)}</td><td>${x.type==='in'?'Money in':'Money out'}</td><td class="${x.type==='in'?'money-in':'money-out'}">${money(x.amount)}</td><td><button class="btn danger" onclick="del('cash',${x.id})">Delete</button></td></tr>`).join('')||empty(7);
+ $('expenseRows').innerHTML=db.expenses.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.description)}</td><td>${esc(x.category)}</td><td>${esc(x.method)}</td><td>${money(x.amount)}</td><td><button class="btn danger" onclick="del('expenses',${x.id})">Delete</button></td></tr>`).join('')||empty(6);
+ $('customerRows').innerHTML=db.customers.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.phone)}</td><td>${esc(x.email)}</td><td>${esc(x.address)}</td><td><button class="btn danger" onclick="del('customers',${x.id})">Delete</button></td></tr>`).join('')||empty(5);
+ $('stockCount').textContent=db.inventory.length;$('stockUnits').textContent=db.inventory.reduce((n,x)=>n+x.qty,0);$('stockLow').textContent=db.inventory.filter(x=>x.qty<=x.low).length;$('stockValue').textContent=money(db.inventory.reduce((n,x)=>n+x.qty*x.cost,0));
+ $('stockRows').innerHTML=db.inventory.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.sku)}</td><td>${x.qty} ${x.qty<=x.low?'<span class="badge red">Low stock</span>':''}</td><td>${x.low}</td><td>${money(x.cost)}</td><td>${money(x.sell)}</td><td><button class="btn secondary" onclick="adjustStock(${x.id})">Adjust</button> <button class="btn danger" onclick="del('inventory',${x.id})">Delete</button></td></tr>`).join('')||empty(7);
+ $('supplierRows').innerHTML=db.suppliers.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.phone)}</td><td>${esc(x.email)}</td><td>${esc(x.address)}</td><td>${esc(x.notes)}</td><td><button class="btn danger" onclick="del('suppliers',${x.id})">Delete</button></td></tr>`).join('')||empty(6);
+ $('accountCards').innerHTML=db.accounts.map(a=>`<div class="card"><div class="label">${esc(a.name)} · ${esc(a.type)}</div><div class="value">${money(accountBalance(a))}</div><div class="hint">${esc(a.provider||'')}</div></div>`).join('');
+ $('accountRows').innerHTML=db.accounts.map(a=>`<tr><td>${esc(a.name)}<div class="sub">${esc(a.provider||'')}</div></td><td>${esc(a.type)}</td><td>${money(a.opening)}</td><td><b>${money(accountBalance(a))}</b></td><td><button class="btn danger" onclick="del('accounts',${a.id})">Delete</button></td></tr>`).join('')||empty(5);
+ renderInvoices();
+ renderBranchesAndStaff();
+}
+function empty(n){return `<tr><td colspan="${n}" class="empty">No records yet / Babu bayanai tukuna.</td></tr>`}
+function renderInvoices(){let q=($('invoiceSearch')?.value||'').toLowerCase();$('invoiceRows').innerHTML=db.invoices.filter(x=>(x.number+' '+x.customer).toLowerCase().includes(q)).map(x=>`<tr><td>${esc(x.number)}</td><td>${esc(x.customer)}<div class="sub">${esc(x.phone)}</div></td><td>${esc(x.date)}</td><td>${money(x.total)}</td><td><span class="badge ${x.paid>=x.total?'':'red'}">${x.paid>=x.total?'Paid':'Balance: '+money(x.total-x.paid)}</span></td><td><button class="btn secondary" onclick="printInvoice(${x.id})">Print</button> <button class="btn danger" onclick="del('invoices',${x.id})">Delete</button></td></tr>`).join('')||empty(6)}
+
+function openStock(){
+ let body=`<div class="form-grid">${field('Item name','stName')}${field('SKU / item code','stSku')}${field('Quantity in stock','stQty','number','0','min="0" step="1"')}${field('Low-stock alert level','stLow','number','5','min="0" step="1"')}${field('Cost price per unit','stCost','number','0','min="0" step="0.01"')}${field('Selling price per unit','stSell','number','0','min="0" step="0.01"')}</div>`;
+ modal('Add stock item',body,()=>{let qty=+$('stQty').value;if(!$('stName').value.trim()||qty<0){alert('Enter item name and valid quantity.');return}db.inventory.push({id:Date.now(),name:$('stName').value,sku:$('stSku').value,qty,low:+$('stLow').value,cost:+$('stCost').value,sell:+$('stSell').value});save();closeModal();renderAll()})
+}
+function adjustStock(id){
+ let item=db.inventory.find(x=>x.id===id);if(!item)return;
+ let body=`<p><b>${esc(item.name)}</b> — current quantity: ${item.qty}</p><div class="form-grid"><div class="field"><label>Adjustment</label><select id="adjType"><option value="add">Add stock</option><option value="remove">Remove stock</option></select></div>${field('Quantity','adjQty','number','1','min="1" step="1')}<div class="field full"><label>Reason</label><input id="adjReason" placeholder="Purchase, damaged goods, stock count..."></div></div>`;
+ modal('Adjust stock quantity',body,()=>{let q=+$('adjQty').value;if(q<=0||($('adjType').value==='remove'&&q>item.qty)){alert('Check the quantity. You cannot remove more than available stock.');return}item.qty += $('adjType').value==='add'?q:-q;item.updatedReason=$('adjReason').value;save();closeModal();renderAll()})
+}
+function openSupplier(){
+ let body=`<div class="form-grid">${field('Supplier name','spName')}${field('Phone','spPhone','tel')}${field('Email','spEmail','email')}${field('Address','spAddress')}<div class="field full"><label>Notes</label><textarea id="spNotes"></textarea></div></div>`;
+ modal('Add supplier',body,()=>{if(!$('spName').value.trim()){alert('Enter supplier name.');return}db.suppliers.push({id:Date.now(),name:$('spName').value,phone:$('spPhone').value,email:$('spEmail').value,address:$('spAddress').value,notes:$('spNotes').value});save();closeModal();renderAll()})
+}
+function openAccount(){
+ let body=`<div class="form-grid">${field('Account name','aName')}<div class="field"><label>Account type</label><select id="aType"><option>Cash</option><option>Bank</option><option>Mobile money</option></select></div>${field('Bank / provider (optional)','aProvider')}${field('Opening balance','aOpening','number','0','min="0" step="0.01')}</div>`;
+ modal('Add cash or bank account',body,()=>{if(!$('aName').value.trim()){alert('Enter account name.');return}db.accounts.push({id:Date.now(),name:$('aName').value,type:$('aType').value,provider:$('aProvider').value,opening:+$('aOpening').value});save();closeModal();renderAll()})
+}
+function accountBalance(a){return a.opening+db.cash.filter(x=>x.account===a.name).reduce((n,x)=>n+(x.type==='in'?x.amount:-x.amount),0)}
+function csv(rows,name){let data=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'text/csv'}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
+function downloadReport(){csv([['Date','Description','Category','Type','Amount','Account'],...db.cash.map(x=>[x.date,x.description,x.category,x.type,x.amount,x.account])],'business-cashflow-report.csv')}
+function exportData(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='abdullahi-business-backup.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.invoices||!d.cash||!d.expenses||!d.customers)throw Error();d.inventory=d.inventory||[];d.suppliers=d.suppliers||[];d.accounts=d.accounts||[];db=d;save();renderAll();alert('Backup imported successfully.')}catch(_){alert('Invalid backup file.')}};r.readAsText(f)}
+function clearData(){if(confirm('This will permanently delete all saved records in this browser. Continue?')){db={invoices:[],cash:[],expenses:[],customers:[],inventory:[],suppliers:[],accounts:[],branches:[{id:1,name:'Head Office',address:'',phone:''}],staff:[],settings:{name:'ABDULLAHI IBRAHIM BUSINESS MANAGER',currency:'NGN'}};save();renderAll()}}
+function saveSettings(){db.settings={name:$('sName').value,phone:$('sPhone').value,email:$('sEmail').value,address:$('sAddress').value,currency:$('sCurrency').value};save();renderAll();alert('Settings saved.')}
+
+function openBranch(){let body=`<div class="form-grid">${field('Branch name','bName')}${field('Phone','bPhone','tel')}${field('Address','bAddress')}</div>`;modal('Add new branch / Ƙara sabon reshe',body,()=>{let name=$('bName').value.trim();if(!name){alert('Enter branch name.');return}if(db.branches.some(b=>b.name.toLowerCase()===name.toLowerCase())){alert('This branch already exists.');return}db.branches.push({id:Date.now(),name,address:$('bAddress').value,phone:$('bPhone').value});save();closeModal();renderAll()})}
+function openStaff(){let body=`<div class="form-grid">${field('Full name','sfName')}${field('Username (planning only)','sfUser')}<div class="field"><label>Role</label><select id="sfRole"><option>Branch Manager</option><option>Cashier</option><option>Storekeeper</option></select></div><div class="field"><label>Assigned branch</label><select id="sfBranch">${db.branches.map(b=>`<option value="${b.id}">${esc(b.name)}</option>`).join('')}</select></div></div>`;modal('Add staff member',body,()=>{if(!$('sfName').value.trim()||!$('sfUser').value.trim()){alert('Enter name and username.');return}db.staff.push({id:Date.now(),name:$('sfName').value.trim(),username:$('sfUser').value.trim(),role:$('sfRole').value,branchId:+$('sfBranch').value});save();closeModal();renderAll()})}
+function renderBranchesAndStaff(){let active=db.branches[0];$('branchCount').textContent=db.branches.length;$('branchActive').textContent=active?.name||'—';$('activeBranchLabel').textContent='Admin view · '+(active?.name||'Head Office');$('branchRows').innerHTML=db.branches.map((b,i)=>`<tr><td><b>${esc(b.name)}</b></td><td>${esc(b.address||'—')}</td><td>${esc(b.phone||'—')}</td><td><span class="badge">Registered</span></td><td>${i===0?'<span class="muted">Main office</span>':'<button class="btn danger" onclick="deleteBranch('+b.id+')">Delete</button>'}</td></tr>`).join('');$('staffRows').innerHTML=db.staff.map(st=>{let br=db.branches.find(b=>b.id===st.branchId);return `<tr><td>${esc(st.name)}</td><td>${esc(st.username)}</td><td>${esc(st.role)}</td><td>${esc(br?.name||'Branch removed')}</td><td><button class="btn danger" onclick="deleteStaff(${st.id})">Remove</button></td></tr>`}).join('')||empty(5)}
+function deleteBranch(id){if(!confirm('Delete this branch from the local register?'))return;db.branches=db.branches.filter(b=>b.id!==id);db.staff=db.staff.filter(st=>st.branchId!==id);save();renderAll()}
+function deleteStaff(id){if(!confirm('Remove this staff entry?'))return;db.staff=db.staff.filter(st=>st.id!==id);save();renderAll()}
+
+function init(){let s=db.settings||{};$('sName').value=s.name||'ABDULLAHI IBRAHIM BUSINESS MANAGER';$('sPhone').value=s.phone||'';$('sEmail').value=s.email||'';$('sAddress').value=s.address||'';$('sCurrency').value=s.currency||'NGN';renderAll()}
+init();
+</script>
+</body></html>
