@@ -1,0 +1,50 @@
+YADDA ZA A KUNNA ONLINE LOGIN DA DATABASE
+=============================================
+
+Kafin farawa: kana buƙatar email ɗinka, internet, da Supabase project. Wannan matakin ba ya buƙatar ka ba kowa password ɗinka.
+
+1. Ƙirƙiri Supabase project
+- Je zuwa https://supabase.com/
+- Yi rajista ko shiga.
+- Zaɓi New project.
+- Sunan project: abdullahi-ibrahim-business-manager.
+- Ka ƙirƙiri database password mai ƙarfi ka ajiye shi a sirri.
+- Zaɓi region mafi kusa da kai idan akwai.
+
+2. Ƙirƙiri database tables
+- A cikin Supabase, buɗe SQL Editor.
+- Buɗe file supabase_schema.sql daga wannan ZIP.
+- Kwafi duk SQL ɗin, manna a SQL Editor, sannan danna RUN.
+
+3. Ƙirƙiri asusun farko
+- Buɗe Authentication > Users.
+- Danna Add user / Create new user.
+- Saka email ɗinka da password mai ƙarfi.
+- Tabbatar da email ɗin idan Supabase ya nema.
+- Kwafi UUID na user ɗin da aka ƙirƙira.
+
+4. Sanya kai Super Admin
+- Buɗe SQL Editor.
+- A cikin file supabase_schema.sql akwai umarnin BOOTSTRAP SUPER ADMIN a ƙarshen file.
+- Sauya YOUR_AUTH_USER_UUID da UUID ɗinka, sannan ka gudanar da wannan umarni.
+- Wannan umarni ne na admin; kada ka ba wani damar gudanar da shi.
+
+5. Sanya project keys a website
+- A Supabase: Project Settings > API.
+- Kwafi Project URL da anon/public key (ko publishable key).
+- Kwafi config.example.js zuwa sabon file mai suna config.js.
+- Cike SUPABASE_URL da SUPABASE_ANON_KEY.
+- Kada ka taɓa amfani da service_role key a config.js ko browser.
+
+6. Gwajin shiga
+- Loda login.html, portal.html da config.js a hosting ɗin website.
+- Bude login.html, shiga da email da password.
+- Idan an saita komai daidai, za ka ga cloud portal.
+- Ƙara branch na farko daga SQL Editor (misali Head Office) ko daga admin dashboard idan an gina UI na gudanarwa.
+
+MUHIMMI
+- Wannan sigar starter ce: login da branch read access suna aiki ne bayan ka yi setup.
+- Ba ta ƙirƙiri staff users ko branch management forms ba tukuna.
+- Ba a haɗa tsoffin invoices, cashflow, expenses, inventory, customers da suppliers da online database ba tukuna.
+- Kafin amfani da kuɗaɗen gaske, sai an kammala haɗa dukkan modules da gwajin RLS.
+- Kada ka tura database password, email password ko service_role key a chat.

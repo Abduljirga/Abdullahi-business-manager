@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ha"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Business Manager — Cloud Portal</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;font:15px Arial;color:#17243a}
+header{background:#102b55;color:white;padding:18px 24px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+main{max-width:1050px;margin:28px auto;padding:0 16px}.box{background:white;border:1px solid #e1e8f0;border-radius:14px;padding:20px;margin-bottom:16px}
+button{border:0;border-radius:8px;padding:10px 14px;background:#1769d2;color:white;cursor:pointer}button.out{background:#eaf1fb;color:#1769d2}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.muted{color:#64748b;font-size:13px}
+table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px;border-bottom:1px solid #e7edf4}
+</style></head><body>
+<header><div><b>ABDULLAHI IBRAHIM BUSINESS MANAGER</b><div class="muted" style="color:#d4e3f8">Cloud portal</div></div><button class="out" id="logout">Fita / Sign out</button></header>
+<main>
+<div class="box"><h2 id="welcome">Ana duba asusu...</h2><div id="role" class="muted"></div></div>
+<div class="grid">
+ <div class="box"><h3>Branches / Rassa</h3><p class="muted">Rassa da aka yi rajista a database.</p><strong id="branchCount">—</strong></div>
+ <div class="box"><h3>Account access</h3><p class="muted">Matsayin izinin wannan asusu.</p><strong id="access">—</strong></div>
+</div>
+<div class="box"><h3>Branches</h3><div class="muted" id="branchNote">Ana loda bayanai...</div><table><thead><tr><th>Suna</th><th>Adireshi</th><th>Waya</th></tr></thead><tbody id="branches"></tbody></table></div>
+<div class="box"><h3>Mataki na gaba</h3><p class="muted">Wannan portal yana gwada login, role da branch access. Ba a haɗa tsoffin invoices, stock, expenses da rahotanni da cloud database ba tukuna.</p></div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script>
+<script>
+(async()=>{
+ if(!window.APP_CONFIG||APP_CONFIG.SUPABASE_URL.includes('YOUR-')){location.href='login.html';return}
+ const db=supabase.createClient(APP_CONFIG.SUPABASE_URL,APP_CONFIG.SUPABASE_ANON_KEY);
+ const {data:{user}}=await db.auth.getUser();if(!user){location.href='login.html';return}
+ const {data:p,error}=await db.from('profiles').select('full_name,role,branch_id,is_active').eq('id',user.id).single();
+ if(error||!p||!p.is_active){await db.auth.signOut();location.href='login.html';return}
+ document.getElementById('welcome').textContent='Barka da zuwa, '+(p.full_name||user.email);
+ document.getElementById('role').textContent='Matsayi: '+p.role+(p.role==='super_admin'?' — Cikakken iko':' — Iyakantaccen izini');
+ document.getElementById('access').textContent=p.role;
+ const {data:bs,error:be}=await db.from('branches').select('id,name,address,phone').order('name');
+ if(be){document.getElementById('branchNote').textContent='Ba a iya loda rassan: '+be.message;return}
+ document.getElementById('branchCount').textContent=(bs||[]).length;
+ document.getElementById('branchNote').textContent=(bs||[]).length?'An loda rassan da wannan asusu yake da izinin gani.':'Babu branch tukuna.';
+ document.getElementById('branches').innerHTML=(bs||[]).map(b=>'<tr><td>'+esc(b.name)+'</td><td>'+esc(b.address||'—')+'</td><td>'+esc(b.phone||'—')+'</td></tr>').join('');
+ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ document.getElementById('logout').onclick=async()=>{await db.auth.signOut();location.href='login.html'};
+})();
+</script></body></html>
